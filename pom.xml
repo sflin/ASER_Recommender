@@ -4,4 +4,18 @@
   <artifactId>ASER_Recommender</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>ASER_Recommender</name>
+  <dependencies>
+  
+  	<dependency>
+    	<groupId>cc.kave</groupId>
+    	<artifactId>cc.kave.rsse.calls</artifactId>
+    	<version>0.0.4</version>
+	</dependency>
+	<dependency>
+    	<groupId>cc.kave</groupId>
+   		<artifactId>cc.kave.commons</artifactId>
+  	  	<version>0.0.4</version>
+	</dependency>
+	
+  </dependencies>
 </project>
