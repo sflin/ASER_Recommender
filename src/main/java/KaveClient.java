@@ -7,6 +7,7 @@ import org.apache.commons.io.FileUtils;
 
 import com.google.common.collect.Lists;
 
+import Model.Recommendation;
 import Service.Recommender;
 import cc.kave.commons.model.events.CommandEvent;
 import cc.kave.commons.model.events.IIDEEvent;
@@ -22,6 +23,7 @@ public class KaveClient {
 	}
 
 	private static String DIR_USERDATA = "C:\\temp\\Events";
+	private static String DIR_METHODCOLLECTIONS ="C:\\temp\\MethodCollections";
 	
 	public static void run() throws FileNotFoundException {
 		
@@ -50,11 +52,11 @@ public class KaveClient {
 
 		if (event instanceof CompletionEvent) {
 			ICompletionEvent ce = (CompletionEvent) event;
-			Recommender recommender = new Recommender("C:\\temp");
-			
-			for(String recommendation : recommender.getRecommendations(ce.getContext().getSST().getEnclosingType().getFullName())) {
-				System.out.println(recommendation);
-			}
+			Recommender recommender = new Recommender(DIR_METHODCOLLECTIONS);
+			recommender.getRecommendations(ce.getContext().getSST().getEnclosingType().getFullName());
+			//for(Recommendation recommendation : ) {
+			//	System.out.println(recommendation.toString());
+			//}
 			
 		}
 	}

@@ -16,13 +16,14 @@ public class MethodCollection {
 	}
 
 	
-	private ArrayList<HashMap<String,Object>> methods;
+	private ArrayList<Method> methods;
 
-	public ArrayList<HashMap<String, Object>> getMethods() {
+	public ArrayList<Method> getMethods() {
 		return methods;
 	}
 
-	public void setMethods(ArrayList<HashMap<String, Object>> methods) {
+	public void setMethods(ArrayList<Method> methods) {
 		this.methods = methods;
 	}
+
 }
