@@ -21,8 +21,10 @@ import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import Model.MethodCollection;
+import Model.ClassCollection;
 import Model.Method;
 import Model.Recommendation;
+import cc.kave.commons.model.naming.types.ITypeName;
 
 public class Recommender {
 	
@@ -39,19 +41,23 @@ public class Recommender {
 		fileInteraction = new FileInteraction();
 	}
 	
-	public List<Recommendation> getRecommendations(String type) throws FileNotFoundException{
+	public List<Recommendation> getRecommendations(ITypeName type) throws FileNotFoundException{
 		
 		List<Recommendation> recommendations = new ArrayList<Recommendation>();
-		type = type.replace('>', '-').replace(':',';');
-		//System.out.println("Search for: "+contextCollectionPath+type+dataType);
+		//System.out.println("Search for: "+contextCollectionPath+type.getAssembly().getName().toString()+dataType);
 		
-		MethodCollection methodCollection = null;
-		File file = new File(contextCollectionPath+type+dataType);
+		ClassCollection classCollection = null;
+		String parentDir = type.getAssembly().getName().toString();
+		String filename = type.getName().toString();
+		
+		String filepath = parentDir +"\\"+filename;
+		
+		File file = new File(contextCollectionPath+filepath+dataType);
 		if(file.exists()){
-			System.out.println("Found file for: "+contextCollectionPath+type+dataType);
-			methodCollection = fileInteraction.parseFile(file);
+			System.out.println("Found file for: "+contextCollectionPath+filepath+dataType);
+			classCollection = fileInteraction.parseClassfile(file);
 		}else {
-			//System.out.println("Did not find file: "+contextCollectionPath+type+dataType);
+			System.out.println("Did not find file: "+contextCollectionPath+filepath+dataType);
 			return recommendations;
 		}
 		
@@ -61,20 +67,26 @@ public class Recommender {
 		int totalAmountOfOccurences = 0;
 
 		/*Calculate the total amount of all method occurences in MethodCollection*/
-		for(Method method : methodCollection.getMethods()) {
-			totalAmountOfOccurences+=method.getCount();
-		}
+		for(MethodCollection methodCollection : classCollection.getCollections()) {
+			
+			if(methodCollection.getFullName().equals(type.getFullName())) {
+				for(Method method : methodCollection.getMethods()) {
+					totalAmountOfOccurences+=method.getCount();
+				}
+				
+				for(Method method : methodCollection.getMethods()) {
+					recommendations.add(new Recommendation(method.getName(),calculatePercentage(method.getCount(),totalAmountOfOccurences)));
+				}
 		
-		for(Method method : methodCollection.getMethods()) {
-			recommendations.add(new Recommendation(method.getName(),calculatePercentage(method.getCount(),totalAmountOfOccurences)));
+				recommendations.sort(new RecommendationComparator());
+				
+				for(Recommendation reco : recommendations) {
+					System.out.println(reco.toString());
+				}
+			}else {
+				System.out.println("CLASSCOLLECTION MATCHED,BUT FULLNAME DID NOT");
+			}
 		}
-
-		recommendations.sort(new RecommendationComparator());
-		
-		for(Recommendation reco : recommendations) {
-			System.out.println(reco.toString());
-		}
-		
 		System.out.println("==================================================");
 		
 		return recommendations;

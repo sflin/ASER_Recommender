@@ -10,17 +10,18 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
+import Model.ClassCollection;
 import Model.MethodCollection;
 
 public class FileInteraction {
 
 	
-	public MethodCollection parseFile(File file) throws FileNotFoundException {
+	public ClassCollection parseClassfile(File file) throws FileNotFoundException {
 		
 		Gson gson = new GsonBuilder().create();
 		
 		JsonReader reader = new JsonReader(new FileReader(file));
-		MethodCollection methodCollection = gson.fromJson(reader,MethodCollection.class);
+		ClassCollection methodCollection = gson.fromJson(reader,ClassCollection.class);
 
 		return methodCollection;	
 	}

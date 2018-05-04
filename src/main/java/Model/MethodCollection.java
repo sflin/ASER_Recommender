@@ -1,28 +1,26 @@
 package Model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
 
 public class MethodCollection {
 	
-	private String fullname;
+	private String fullName;
+	private List<Method> methods;
 	
-	public String getFullname() {
-		return fullname;
+	public MethodCollection(String fullName, List<Method> methods) {
+		this.fullName = fullName;
+		this.methods = methods;
 	}
-
-	public void setFullname(String fullname) {
-		this.fullname = fullname;
+	public String getFullName() {
+		return fullName;
 	}
-
-	
-	private ArrayList<Method> methods;
-
-	public ArrayList<Method> getMethods() {
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
+	}
+	public List<Method> getMethods() {
 		return methods;
 	}
-
-	public void setMethods(ArrayList<Method> methods) {
+	public void setMethods(List<Method> methods) {
 		this.methods = methods;
 	}
 
