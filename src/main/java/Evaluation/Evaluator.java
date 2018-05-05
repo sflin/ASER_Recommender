@@ -36,7 +36,6 @@ public class Evaluator implements IEvaluator {
 	}
 
 	private int getRank(String name, List<Recommendation> resultList) {
-		// String type = actualSelection.isConstructor() ? "CTOR" : "SIMPLE";
 		if (resultList.isEmpty()) {
 			// FN: we do not have a hit list for this event
 			falseNegative += 1;
@@ -56,7 +55,6 @@ public class Evaluator implements IEvaluator {
 			// FP: rank = 0, hit-list existing, but no entry found
 			falsePositive += 1;
 		}
-		// Expression-type: [cast, simple, ctor, prop]
 		return rank;
 	}
 
