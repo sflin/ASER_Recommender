@@ -1,19 +1,17 @@
 package AppStart;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 
 import com.google.common.collect.Lists;
 
+import Evaluation.Evaluator;
 import Model.Recommendation;
 import Service.Recommender;
-import cc.kave.commons.model.events.CommandEvent;
 import cc.kave.commons.model.events.IIDEEvent;
 import cc.kave.commons.model.events.completionevents.CompletionEvent;
-import cc.kave.commons.model.events.completionevents.Context;
 import cc.kave.commons.model.events.completionevents.ICompletionEvent;
 import cc.kave.commons.utils.io.ReadingArchive;
 
@@ -25,8 +23,15 @@ public class Client {
 
 	private static String DIR_USERDATA = "C:\\temp\\Events\\";
 	private static String DIR_METHODCOLLECTIONS ="C:\\temp\\MethodCollections";
+	private static boolean doEvaluation = false;
+	private static Evaluator evaluator;
 	
 	public static void run(String[] args) throws FileNotFoundException {
+		
+		if(args[0] != null && args[0].equals("-e")) {
+			doEvaluation = true;
+			evaluator = new Evaluator();
+		}
 		
 		for (String user : findAllUsers()) {
 			ReadingArchive ra = new ReadingArchive(new File(user));
@@ -37,6 +42,9 @@ public class Client {
 				
 			}
 			ra.close();
+		}
+		if(doEvaluation) {
+			evaluator.summarizeResults();
 		}
 
 	}
@@ -54,7 +62,10 @@ public class Client {
 		if (event instanceof CompletionEvent) {
 			ICompletionEvent ce = (CompletionEvent) event;
 			Recommender recommender = new Recommender(DIR_METHODCOLLECTIONS);
-			recommender.getRecommendations(ce.getContext().getSST().getEnclosingType());
+			List<Recommendation> resultList = recommender.getRecommendations(ce.getContext().getSST().getEnclosingType());
+			if(doEvaluation) {
+				evaluator.evaluate(resultList, ce.getLastSelectedProposal());
+			}
 			
 		}
 	}
