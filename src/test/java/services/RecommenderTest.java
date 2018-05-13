@@ -25,13 +25,13 @@ public class RecommenderTest {
 	
 	@Before
 	public void setup() throws UnsupportedEncodingException, FileNotFoundException, IOException {
-		recommender = new Recommender("src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"TestCollections");
+		recommender = new Recommender("src//test//java//Recommender//TestCollections");
 	}
 	
 	@Test
 	public void testGetRecommendationSingle() throws FileNotFoundException {
 		
-		for (String user : findAllUsers("src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"SingleEvent")) {
+		for (String user : findAllUsers("src//test//java//Recommender//SingleEvent")) {
 			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));
 			while (ra.hasNext()) {
 				IIDEEvent event = ra.getNext(IIDEEvent.class);
@@ -39,7 +39,7 @@ public class RecommenderTest {
 				if (event instanceof CompletionEvent) {
 					ICompletionEvent ce = (CompletionEvent) event;
 					List<Recommendation> resultList = recommender.getRecommendations(ce.getContext().getSST().getEnclosingType());
-					//assertTrue(resultList.size()==11);
+					assertTrue(resultList.size()==11);
 				}
 			}
 			ra.close();
@@ -49,7 +49,7 @@ public class RecommenderTest {
 	@Test
 	public void testGetRecommendationMultiple() throws FileNotFoundException {
 		
-		for (String user : findAllUsers("src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"MultipleEvents")) {
+		for (String user : findAllUsers("src//test//java//Recommender//MultipleEvents")) {
 			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));
 			while (ra.hasNext()) {
 				IIDEEvent event = ra.getNext(IIDEEvent.class);
@@ -57,7 +57,7 @@ public class RecommenderTest {
 				if (event instanceof CompletionEvent) {
 					ICompletionEvent ce = (CompletionEvent) event;
 					List<Recommendation> resultList = recommender.getRecommendations(ce.getContext().getSST().getEnclosingType());
-					//assertTrue(resultList.size()>0);
+					assertTrue(resultList.size()>0);
 				}
 			}
 			ra.close();
@@ -72,10 +72,10 @@ public class RecommenderTest {
 		TypeName typeName2 = new TypeName("KaVE.RS.Commons.Tests_Integration.BaseCodeCompletionTest, KaVE.RS.Commons.Tests_Integration");
 		
 		List<Recommendation> resultList1 = recommender.getRecommendations(typeName1);
-		//assertTrue(resultList1.size()>0);
+		assertTrue(resultList1.size()>0);
 		
 		List<Recommendation> resultList2 = recommender.getRecommendations(typeName2);
-		//assertTrue(resultList2.size()>0);
+		assertTrue(resultList2.size()>0);
 		
 	}
 
