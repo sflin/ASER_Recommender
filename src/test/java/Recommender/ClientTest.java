@@ -17,20 +17,20 @@ public class ClientTest {
 	private String output;
 	private File recoOutput;
 	
-	/*
+	
 	@Before
 	public void setup() {
-		
-	}
-	
-	@Test
-	public void testRun() throws FileNotFoundException {
 		output = System.getProperty("user.home")+"/Recommender"+"/OutputTest";
 		recoOutput = new File(output);
 		if(!recoOutput.exists()) {
 			recoOutput.mkdir();
 		}
-		String[] args = {"src//test//java/Recommender//","src//test//java//Recommender//TestCollections//",output,"-e"};
+	}
+	
+	@Test
+	public void testRun() throws FileNotFoundException {
+		
+		String[] args = {"src//test//java/Recommender//SingleEvent//","src//test//java//Recommender//TestCollections//",output,"-e"};
 		Client.main(args);
 		assertTrue(recoOutput.exists());
 		assertTrue(recoOutput.isDirectory());
@@ -46,5 +46,5 @@ public class ClientTest {
 		}
 		recoOutput.delete();
 	}
-	*/
+
 }

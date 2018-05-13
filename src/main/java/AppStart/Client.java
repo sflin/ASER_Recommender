@@ -30,6 +30,7 @@ public class Client {
 	private static boolean doEvaluation = false;
 	private static Evaluator evaluator;
 	private static IExport export;
+	private static boolean debugging = false;
 	
 	public static void run(String userdata, String methodCollections,String outputDirectory,String flag) throws FileNotFoundException {
 		
@@ -58,6 +59,13 @@ public class Client {
 			while (ra.hasNext()) {
 				IIDEEvent event = ra.getNext(IIDEEvent.class);
 				List<Recommendation> recommendations = process(event);
+				
+				if(debugging) {
+					for(Recommendation reco: recommendations) {
+						System.out.println(reco.toString());
+					}
+				}
+				
 				if(!recommendations.isEmpty()) {
 					export.printRecommendationsToCsv(recommendations);
 				}
