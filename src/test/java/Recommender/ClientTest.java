@@ -34,8 +34,8 @@ public class ClientTest {
 	@Test
 	public void testRun() throws FileNotFoundException {
 		
-		String[] args = {"src//test//java//Recommender//SingleEvent",
-				"src//test//java//Recommender//TestCollections",output,"-e"};
+		String[] args = {"src//test//java//Recommender//",
+				"src//test//java//Recommender//TestCollections//",output,"-e"};
 		Client.main(args);
 		assertTrue(recoOutput.exists());
 		assertTrue(recoOutput.isDirectory());

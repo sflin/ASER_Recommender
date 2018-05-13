@@ -19,75 +19,66 @@ import cc.kave.commons.model.events.IIDEEvent;
 import cc.kave.commons.model.events.completionevents.CompletionEvent;
 import cc.kave.commons.model.events.completionevents.ICompletionEvent;
 import cc.kave.commons.model.naming.impl.v0.types.TypeName;
+
 public class RecommenderTest {
-	
+
 	private IRecommender recommender;
-	
+
 	@Before
 	public void setup() throws UnsupportedEncodingException, FileNotFoundException, IOException {
-		recommender = new Recommender("src//test//java//Recommender//TestCollections");
+		recommender = new Recommender("src//test//java//Recommender//TestCollections//");
 	}
-	
+
 	@Test
 	public void testGetRecommendationSingle() throws FileNotFoundException {
-		
-		for (String user : findAllUsers("src//test//java//Recommender//SingleEvent")) {
-			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));
-			while (ra.hasNext()) {
-				IIDEEvent event = ra.getNext(IIDEEvent.class);
-				
-				if (event instanceof CompletionEvent) {
-					ICompletionEvent ce = (CompletionEvent) event;
-					List<Recommendation> resultList = recommender.getRecommendations(ce.getContext().getSST().getEnclosingType());
-					assertTrue(resultList.size()==11);
-				}
+
+		ReadingArchiveEvents ra = new ReadingArchiveEvents(new File("src//test//java//Recommender//test-event.zip"));
+		while (ra.hasNext()) {
+			IIDEEvent event = ra.getNext(IIDEEvent.class);
+
+			if (event instanceof CompletionEvent) {
+				ICompletionEvent ce = (CompletionEvent) event;
+				List<Recommendation> resultList = recommender
+						.getRecommendations(ce.getContext().getSST().getEnclosingType());
+				assertTrue(resultList.size() == 11);
 			}
-			ra.close();
 		}
+		ra.close();
 	}
-	
+
 	@Test
 	public void testGetRecommendationMultiple() throws FileNotFoundException {
-		
-		for (String user : findAllUsers("src//test//java//Recommender//MultipleEvents")) {
-			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));
-			while (ra.hasNext()) {
-				IIDEEvent event = ra.getNext(IIDEEvent.class);
-				
-				if (event instanceof CompletionEvent) {
-					ICompletionEvent ce = (CompletionEvent) event;
-					List<Recommendation> resultList = recommender.getRecommendations(ce.getContext().getSST().getEnclosingType());
-					assertTrue(resultList.size()>0);
-				}
+
+		ReadingArchiveEvents ra = new ReadingArchiveEvents(
+				new File("src//test//java//services//test-event-multiple.zip"));
+		while (ra.hasNext()) {
+			IIDEEvent event = ra.getNext(IIDEEvent.class);
+
+			if (event instanceof CompletionEvent) {
+				ICompletionEvent ce = (CompletionEvent) event;
+				List<Recommendation> resultList = recommender
+						.getRecommendations(ce.getContext().getSST().getEnclosingType());
+				assertTrue(resultList.size() > 0);
 			}
-			ra.close();
 		}
+		ra.close();
 	}
-	
+
 	@Test
 	public void testGetRecommendationForSpecificType() throws FileNotFoundException {
-		
-		
-		TypeName typeName1 = new TypeName("KaVE.RS.SolutionAnalysis.Tests.SortByUser.SortByUserIoTest, KaVE.RS.SolutionAnalysis.Tests");
-		TypeName typeName2 = new TypeName("KaVE.RS.Commons.Tests_Integration.BaseCodeCompletionTest, KaVE.RS.Commons.Tests_Integration");
-		
+
+		TypeName typeName1 = new TypeName(
+				"KaVE.RS.SolutionAnalysis.Tests.SortByUser.SortByUserIoTest, KaVE.RS.SolutionAnalysis.Tests");
+		TypeName typeName2 = new TypeName(
+				"KaVE.RS.Commons.Tests_Integration.BaseCodeCompletionTest, KaVE.RS.Commons.Tests_Integration");
+
 		List<Recommendation> resultList1 = recommender.getRecommendations(typeName1);
-		assertTrue(resultList1.size()>0);
-		
+		assertTrue(resultList1.size() > 0);
+
 		List<Recommendation> resultList2 = recommender.getRecommendations(typeName2);
-		assertTrue(resultList2.size()>0);
-		
-	}
+		assertTrue(resultList2.size() > 0);
 
-	public static List<String> findAllUsers(String path) {
-		List<String> zips = Lists.newLinkedList();
-		for (File f : FileUtils.listFiles(new File(path), new String[] { "zip" }, true)) {
-			zips.add(f.getAbsolutePath());
-		}
-		return zips;
 	}
-	
-
 
 
 }
