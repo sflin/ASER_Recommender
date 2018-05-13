@@ -20,7 +20,7 @@ public class ClientTest {
 	
 	@Before
 	public void setup() {
-		output = System.getProperty("user.home")+"/Recommender"+"/OutputTest";
+		output = System.getProperty("user.home")+File.separator+"Recommender"+File.separator+"OutputTest";
 		recoOutput = new File(output);
 		if(!recoOutput.exists()) {
 			recoOutput.mkdir();
@@ -30,7 +30,8 @@ public class ClientTest {
 	@Test
 	public void testRun() throws FileNotFoundException {
 		
-		String[] args = {"src//test//java/Recommender//SingleEvent//","src//test//java//Recommender//TestCollections//",output,"-e"};
+		String[] args = {"src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"SingleEvent"+File.separator,
+				"src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"TestCollections"+File.separator,output,"-e"};
 		Client.main(args);
 		assertTrue(recoOutput.exists());
 		assertTrue(recoOutput.isDirectory());
