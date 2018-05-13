@@ -17,10 +17,12 @@ import cc.kave.commons.model.events.completionevents.ICompletionEvent;
 
 public class Export implements IExport{
 
-	private static String DIR_OUTPUT =System.getProperty("user.home") + File.separator +"Recommender"+File.separator +"Output";
+	private static String DIR_OUTPUT;
 	private String timeOfRun;
 	private File directory;
-	public Export() {
+	public Export(String outputDirectory) {
+		
+		DIR_OUTPUT =outputDirectory;
 		
 		File f = new File(DIR_OUTPUT);
 		if(!f.exists()) {

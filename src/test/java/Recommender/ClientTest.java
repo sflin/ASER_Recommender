@@ -15,34 +15,33 @@ import AppStart.Client;
 public class ClientTest {
 
 	private String output;
-	
+	private File recoOutput;
 	@Before
 	public void setup() {
-		
-		output = System.getProperty("user.home") + "/RecommenderOutput";
+		output = System.getProperty("user.home") + File.separator +"Recommender"+ File.separator+"OutputTest";
+		recoOutput = new File(output);
+		if(!recoOutput.exists()) {
+			recoOutput.mkdir();
+		}
 	}
 	
 	@Test
 	public void testRun() throws FileNotFoundException {
-		String[] args = {};
+		String[] args = {"src//test//java/Recommender//","src//test//java//Recommender//TestCollections//",output,"-e"};
 		Client.main(args);
-		File recoOutput = new File(output);
 		assertTrue(recoOutput.exists());
 		assertTrue(recoOutput.isDirectory());
 		File[] files = recoOutput.listFiles();
-		assertEquals(files.length, 1);
+		assertEquals(files.length,1);
 	}
 	
 	@After
 	public void tearDown() {
-		File archive = new File(output);
-		for(File dir : archive.listFiles()) {
-			for(File file : dir.listFiles()) {
-				file.delete();
-			}
+
+		for(File dir : recoOutput.listFiles()) {
 			dir.delete();
 		}
-		archive.delete();
+		recoOutput.delete();
 	}
 
 }

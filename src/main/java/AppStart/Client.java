@@ -21,26 +21,37 @@ import cc.kave.commons.model.events.completionevents.ICompletionEvent;
 public class Client {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		run(args);
+		run(args[0],args[1],args[2],args[3]);
 	}
 
-	private static String DIR_USERDATA = System.getProperty("user.home") + File.separator +"Recommender"+ File.separator +"Events";
-	private static String DIR_METHODCOLLECTIONS =System.getProperty("user.home") + File.separator + "Recommender" +File.separator + "MethodCollections";
+	private static String DIR_USERDATA;
+	private static String DIR_METHODCOLLECTIONS;
 	
 	private static boolean doEvaluation = false;
 	private static Evaluator evaluator;
 	private static IExport export;
 	
-	public static void run(String[] args) throws FileNotFoundException {
+	public static void run(String userdata, String methodCollections,String outputDirectory,String flag) throws FileNotFoundException {
 		
+		if(userdata.isEmpty()) {
+			DIR_USERDATA = System.getProperty("user.home") + File.separator +"Recommender"+ File.separator +"Events";
+		}else {
+			DIR_USERDATA=userdata;
+		}
+		if(methodCollections.isEmpty()) {
+			DIR_METHODCOLLECTIONS =System.getProperty("user.home") + File.separator + "Recommender" +File.separator + "MethodCollections";
+		}else {
+			DIR_METHODCOLLECTIONS=methodCollections;
+		}
+			
 		checkForFolders(DIR_USERDATA);
 		checkForFolders(DIR_METHODCOLLECTIONS);
 		
-		if(args[0] != null && args[0].equals("-e")) {
+		if(flag != null && flag.equals("-e")) {
 			doEvaluation = true;
 			evaluator = new Evaluator();
 		}
-		export = new Export();
+		export = new Export(outputDirectory);
 		
 		for (String user : findAllUsers()) {
 			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));

@@ -132,6 +132,10 @@ public class Evaluator implements IEvaluator {
 				rankSum += rank;
 			}
 		}
-		return count != 0 ? (rankSum / count) : null;
+		if(count != 0 && rankSum!=0.0) {
+			return (rankSum / count);
+		}else {
+			return 0.0;
+		}
 	}
 }

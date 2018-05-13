@@ -20,8 +20,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.google.common.collect.Lists;
-import com.google.gson.Gson;
-
 import Model.ClassCollection;
 import Model.Recommendation;
 import Service.IRecommender;
@@ -30,13 +28,8 @@ import Service.Impl.Recommender;
 import cc.kave.commons.model.events.IIDEEvent;
 import cc.kave.commons.model.events.completionevents.CompletionEvent;
 import cc.kave.commons.model.events.completionevents.ICompletionEvent;
-import cc.kave.commons.model.naming.impl.v0.codeelements.MethodName;
-import cc.kave.commons.model.naming.impl.v0.codeelements.PropertyName;
-import cc.kave.commons.model.naming.impl.v0.types.TypeName;
-
 public class RecommenderTest {
 	
-	private ClassCollection classCollection;
 	
 	@Before
 	public void setup() throws UnsupportedEncodingException, FileNotFoundException, IOException {
