@@ -25,13 +25,13 @@ public class RecommenderTest {
 	
 	@Before
 	public void setup() throws UnsupportedEncodingException, FileNotFoundException, IOException {
-		recommender = new Recommender("src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"TestCollections"+File.separator);
+		recommender = new Recommender("src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"TestCollections");
 	}
 	
 	@Test
 	public void testGetRecommendationSingle() throws FileNotFoundException {
 		
-		for (String user : findAllUsers("src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"SingleEvent"+File.separator)) {
+		for (String user : findAllUsers("src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"SingleEvent")) {
 			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));
 			while (ra.hasNext()) {
 				IIDEEvent event = ra.getNext(IIDEEvent.class);
@@ -49,7 +49,7 @@ public class RecommenderTest {
 	@Test
 	public void testGetRecommendationMultiple() throws FileNotFoundException {
 		
-		for (String user : findAllUsers("src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"MultipleEvents"+File.separator)) {
+		for (String user : findAllUsers("src"+File.separator+"test"+File.separator+"java"+File.separator+"Recommender"+File.separator+"MultipleEvents")) {
 			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));
 			while (ra.hasNext()) {
 				IIDEEvent event = ra.getNext(IIDEEvent.class);
