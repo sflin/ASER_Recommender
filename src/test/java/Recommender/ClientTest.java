@@ -18,19 +18,20 @@ public class ClientTest {
 	private File recoOutput;
 	@Before
 	public void setup() {
+		
+	}
+	
+	@Test
+	public void testRun() throws FileNotFoundException {
 		output = System.getProperty("user.home") + File.separator +"Recommender"+ File.separator+"OutputTest";
 		recoOutput = new File(output);
 		if(!recoOutput.exists()) {
 			recoOutput.mkdir();
 		}
-	}
-	
-	@Test
-	public void testRun() throws FileNotFoundException {
 		String[] args = {"src//test//java/Recommender//","src//test//java//Recommender//TestCollections//",output,"-e"};
 		Client.main(args);
-		//assertTrue(recoOutput.exists());
-		//assertTrue(recoOutput.isDirectory());
+		assertTrue(recoOutput.exists());
+		assertTrue(recoOutput.isDirectory());
 		File[] files = recoOutput.listFiles();
 		assertEquals(files.length,1);
 	}
