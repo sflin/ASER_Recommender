@@ -9,12 +9,14 @@ import cc.kave.commons.model.events.completionevents.IProposal;
 public class Evaluator implements IEvaluator {
 
 	private static List<Double> apList;
+	private static List<Integer> rankList;
 	private static int truePositive;
 	private static int falsePositive;
 	private static int falseNegative;
 
 	public Evaluator() {
 		apList = new ArrayList<>();
+		rankList = new ArrayList<>();
 		truePositive = 0;
 		falsePositive = 0;
 		falseNegative = 0;
@@ -23,20 +25,23 @@ public class Evaluator implements IEvaluator {
 	public void evaluate(List<Recommendation> resultList, IProposal actualSelection) {
 		String name = NameUtility.getName(actualSelection);
 		int rank = getRank(name, resultList);
+		rankList.add(rank);
 		apList.add(getAveragePrecision(rank));
 	}
 
 	public void summarizeResults() {
 		System.out.println("Number of processed queries in total: " + apList.size());
-		System.out.println("Number of successful recommendations: " + getSuccessfulRecommendations());
+		System.out.println("Number of unsuccessful recommendations where a hit-list exists, but no entry was found: "
+				+ falsePositive);
+		System.out.println("Number of unsuccessful recommendations without a hit-list: " + falseNegative);
+		System.out.println("Number of successful recommendations: " + truePositive);
 		System.out.println("Precision of recommender: " + getPrecision());
 		System.out.println("Recall of recommender: " + getRecall());
-		System.out.println("On average you have to look at " + getMeanAveragePrecision()
-				+ " entries to get a match (mean average precision)");
+		System.out.println("On average " + getAverageRank() + " entries must be observed to find a match.");
 	}
 
 	private int getRank(String name, List<Recommendation> resultList) {
-		if (resultList.isEmpty()) {
+		if (resultList.isEmpty() || name == null) {
 			// FN: we do not have a hit list for this event
 			falseNegative += 1;
 			return -1;
@@ -67,7 +72,7 @@ public class Evaluator implements IEvaluator {
 	 */
 	private double getPrecision() {
 		if ((truePositive + falsePositive) != 0) {
-			return truePositive / (truePositive + falsePositive);
+			return (double) truePositive / (truePositive + falsePositive);
 		}
 		return 0.0;
 	}
@@ -81,21 +86,21 @@ public class Evaluator implements IEvaluator {
 	 */
 	private double getRecall() {
 		if ((falseNegative + truePositive) != 0) {
-			return truePositive / (falseNegative + truePositive);
+			return (double) truePositive / (falseNegative + truePositive);
 		}
 		return 0.0;
 	}
 
 	/**
 	 * Calculates the averagePrecision of an entry at rank k. It corresponds to the
-	 * average distance from the top-result to the actual rank; the bigger AP is, the
-	 * better.
+	 * average distance from the top-result to the actual rank; the bigger AP is,
+	 * the better.
 	 * 
 	 * @param rankOfK
 	 * @return double averagePrecision
 	 */
 	private double getAveragePrecision(int rankOfK) {
-		return rankOfK > 0 ? (1 / rankOfK) : 0.0;
+		return rankOfK > 0 ? (1.0 / rankOfK) : 0.0;
 	}
 
 	/**
@@ -108,19 +113,25 @@ public class Evaluator implements IEvaluator {
 	 */
 	private double getMeanAveragePrecision() {
 		double apSum = 0.0;
+		int count = 0;
 		for (double ap : apList) {
+			if(ap > 0.0) {
+				count += 1;
+			}
 			apSum += ap;
 		}
-		return apList.size() != 0 ? (apSum / apList.size()) : -1.0;
+		return count != 0 ? (apSum / count) : null;
 	}
-
-	private int getSuccessfulRecommendations() {
-		int successfulHits = 0;
-		for (double ap : apList) {
-			if (ap > 0.0) {
-				successfulHits += 1;
+	
+	private double getAverageRank() {
+		double rankSum = 0.0;
+		int count = 0;
+		for (int rank : rankList) {
+			if(rank > 0) {
+				count += 1;
+				rankSum += rank;
 			}
 		}
-		return successfulHits;
+		return count != 0 ? (rankSum / count) : null;
 	}
 }

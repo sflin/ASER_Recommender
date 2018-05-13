@@ -11,14 +11,17 @@ import cc.kave.commons.model.naming.types.ITypeName;
 public class NameUtility {
 	
 	public static String getName(IProposal actualSelection) {
-		if(actualSelection instanceof IMethodName) {
-			return getName((IMethodName) actualSelection);
+		if(actualSelection == null) {
+			return null;
 		}
-		else if(actualSelection instanceof ITypeName) {
-			return getName((ITypeName) actualSelection);
+		if(actualSelection.getName() instanceof IMethodName) {
+			return getName((IMethodName) actualSelection.getName());
 		}
-		else if(actualSelection instanceof IPropertyName) {
-			return getName((IPropertyName) actualSelection);
+		else if(actualSelection.getName() instanceof ITypeName) {
+			return getName((ITypeName) actualSelection.getName());
+		}
+		else if(actualSelection.getName() instanceof IPropertyName) {
+			return getName((IPropertyName) actualSelection.getName());
 		}
 		else {
 			return null;
