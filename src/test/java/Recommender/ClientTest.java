@@ -23,7 +23,7 @@ public class ClientTest {
 	
 	@Test
 	public void testRun() throws FileNotFoundException {
-		output = System.getProperty("user.home") + File.separator +"Recommender"+ File.separator+"OutputTest";
+		output = System.getProperty("user.home")+"/Recommender"+"/OutputTest";
 		recoOutput = new File(output);
 		if(!recoOutput.exists()) {
 			recoOutput.mkdir();
