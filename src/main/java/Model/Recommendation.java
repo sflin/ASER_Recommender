@@ -6,11 +6,12 @@ import java.math.RoundingMode;
 public class Recommendation {
 	
 	private String name;
-	
+	private String type;
 	private double percentage;
 	
-	public Recommendation(String name, double percentage) {
+	public Recommendation(String name, String type, double percentage) {
 		this.name=name;
+		this.type = type;
 		this.percentage =percentage;
 	}
 
@@ -36,12 +37,20 @@ public class Recommendation {
 	        BigDecimal bd = new BigDecimal(d);
 	        bd = bd.setScale(places, RoundingMode.HALF_UP);
 	        return bd.floatValue();
-	    }
-	
+	 }
+	 
+	 public String getType() {
+			return type;
+	}
+
+	public void setType(String type) {
+			this.type = type;
+	}
+
 	@Override
 	public String toString() {
 		
-		return "Name: "+name+" Percentage: "+round(percentage,2)+"%";
+		return "Name: "+name+" Type: "+type+" Percentage: "+round(percentage,2)+"%";
 	}
 
 }
