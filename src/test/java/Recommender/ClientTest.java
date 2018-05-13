@@ -49,7 +49,7 @@ public class ClientTest {
 		for(File dir : recoOutput.listFiles()) {
 			dir.delete();
 		}
-		recoOutput.delete();
+		//recoOutput.delete();
 	}
 
 }
