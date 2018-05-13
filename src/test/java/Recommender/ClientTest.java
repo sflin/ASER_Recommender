@@ -16,6 +16,8 @@ public class ClientTest {
 
 	private String output;
 	private File recoOutput;
+	
+	/*
 	@Before
 	public void setup() {
 		
@@ -44,5 +46,5 @@ public class ClientTest {
 		}
 		recoOutput.delete();
 	}
-
+	*/
 }
