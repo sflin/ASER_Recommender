@@ -1,8 +1,13 @@
 package AppStart;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.io.FileUtils;
 
@@ -14,69 +19,70 @@ import Service.IExport;
 import Service.Impl.Export;
 import Service.Impl.ReadingArchiveEvents;
 import Service.Impl.Recommender;
+import Visitor.CompletionExpressionVisitor;
 import cc.kave.commons.model.events.IIDEEvent;
 import cc.kave.commons.model.events.completionevents.CompletionEvent;
 import cc.kave.commons.model.events.completionevents.ICompletionEvent;
+import cc.kave.commons.model.events.completionevents.IProposal;
 
 public class Client {
 
 	public static void main(String[] args) throws FileNotFoundException {
-		run(args[0],args[1],args[2],args[3]);
+		run(args[0], args[1], args[2], args[3]);
 	}
 
 	private static String DIR_USERDATA;
 	private static String DIR_METHODCOLLECTIONS;
-	
+
 	private static boolean doEvaluation = false;
 	private static Evaluator evaluator;
 	private static IExport export;
-	
-	public static void run(String userdata, String methodCollections,String outputDirectory,String flag) throws FileNotFoundException {
-		
-		if(userdata.isEmpty()) {
-			DIR_USERDATA = System.getProperty("user.home") + File.separator +"Recommender"+ File.separator +"Events";
-		}else {
-			DIR_USERDATA=userdata;
+
+	public static void run(String userdata, String methodCollections, String outputDirectory, String flag)
+			throws FileNotFoundException {
+
+		if (userdata.isEmpty()) {
+			DIR_USERDATA = System.getProperty("user.home") + File.separator + "Recommender" + File.separator + "Events";
+		} else {
+			DIR_USERDATA = userdata;
 		}
-		if(methodCollections.isEmpty()) {
-			DIR_METHODCOLLECTIONS =System.getProperty("user.home") + File.separator + "Recommender" +File.separator + "MethodCollections";
-		}else {
-			DIR_METHODCOLLECTIONS=methodCollections;
+		if (methodCollections.isEmpty()) {
+			DIR_METHODCOLLECTIONS = System.getProperty("user.home") + File.separator + "Recommender" + File.separator
+					+ "MethodCollections";
+		} else {
+			DIR_METHODCOLLECTIONS = methodCollections;
 		}
-			
+
+		export = new Export(outputDirectory);
 		checkForFolders(DIR_USERDATA);
 		checkForFolders(DIR_METHODCOLLECTIONS);
-		
-		if(flag != null && flag.equals("-e")) {
+
+		if (flag != null && flag.equals("-e")) {
 			doEvaluation = true;
 			evaluator = new Evaluator();
 		}
-		export = new Export(outputDirectory);
-		
+
 		for (String user : findAllUsers()) {
 			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));
 			while (ra.hasNext()) {
 				IIDEEvent event = ra.getNext(IIDEEvent.class);
-				List<Recommendation> recommendations = process(event);
-				if(!recommendations.isEmpty()) {
-					export.printRecommendationsToCsv(recommendations);
-				}
+				process(event);
 			}
 			ra.close();
 		}
-		if(doEvaluation) {
+		if (doEvaluation) {
 			evaluator.summarizeResults();
 		}
 
 	}
-	
+
 	private static void checkForFolders(String foldername) {
 		File f = new File(foldername);
-		if(!f.exists()) {
+		if (!f.exists()) {
 			f.mkdir();
 		}
 	}
-	
+
 	public static List<String> findAllUsers() {
 		List<String> zips = Lists.newLinkedList();
 		for (File f : FileUtils.listFiles(new File(DIR_USERDATA), new String[] { "zip" }, true)) {
@@ -84,25 +90,32 @@ public class Client {
 		}
 		return zips;
 	}
-	
-	private static List<Recommendation> process(IIDEEvent event) throws FileNotFoundException {
+
+	private static void process(IIDEEvent event) throws FileNotFoundException {
 
 		if (event instanceof CompletionEvent) {
 			ICompletionEvent ce = (CompletionEvent) event;
-			Recommender recommender = new Recommender(DIR_METHODCOLLECTIONS);
-			List<Recommendation> resultList = recommender.getRecommendations(ce.getContext().getSST().getEnclosingType());
-			
-			//Activate for Event debugging
-			//export.printEvent(ce);
-			
-			if(doEvaluation) {
-				evaluator.evaluate(resultList, ce.getLastSelectedProposal());
-			}
-			return resultList;
-		}
-		return new ArrayList<Recommendation>();
-	}
 
-	
+			HashMap<List<Recommendation>, IProposal> evaluationSet = new HashMap<List<Recommendation>, IProposal>();
+
+			ce.getContext().getSST().accept(new CompletionExpressionVisitor(DIR_METHODCOLLECTIONS, evaluationSet, ce),null);
+
+			Iterator<Entry<List<Recommendation>, IProposal>> it = evaluationSet.entrySet().iterator();
+			while (it.hasNext()) {
+				
+				Map.Entry<List<Recommendation>, IProposal> pair = (Map.Entry<List<Recommendation>, IProposal>) it.next();
+				
+				if (!pair.getKey().isEmpty()) {
+					export.printRecommendationsToCsv(pair.getKey());
+				}
+				
+				if (doEvaluation) {	
+					evaluator.evaluate(pair.getKey(), pair.getValue());
+				}
+
+			}
+
+		}
+	}
 
 }
