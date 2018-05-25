@@ -1,1 +1,0 @@
-{"collections":[{"fullName":"KaVE.VS.FeedbackGenerator.Tests.SessionManager.Anonymize.AnonymousNameUtilsTest","methods":[{"name":"KaVE.VS.FeedbackGenerator.Tests.SessionManager.Anonymize.AnonymousNameUtilsTest.AssertAnonymizedEquals(KaVE.Commons.Model.Names.IName original, KaVE.Commons.Model.Names.IName expected)","type":"SIMPLE","count":106}]}]}

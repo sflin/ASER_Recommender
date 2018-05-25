@@ -15,6 +15,7 @@ import recommender.Client;
 public class ClientTest {
 
 	private String output;
+	private File recommenderDir;
 	private File recoOutput;
 	
 	
@@ -25,13 +26,22 @@ public class ClientTest {
 	
 	@Test
 	public void testRun() throws FileNotFoundException {
-		output = System.getProperty("user.home")+"/Recommender"+"/OutputTest";
+		
+		recommenderDir = new File(System.getProperty("user.home")+File.separator+"Recommender");
+		output = System.getProperty("user.home")+File.separator+"Recommender"+File.separator+"OutputTest";
 		recoOutput = new File(output);
+			
+		if(!recommenderDir.exists()) {
+			recommenderDir.mkdir();
+		}
+		
 		if(!recoOutput.exists()) {
 			recoOutput.mkdir();
 		}
-		String[] args = {"src/test/java/Recommender/","src/test/java/Recommender/TestCollections",output,"-e"};
+		
+		String[] args = {"src/test/java/Recommender","src/test/java/Recommender/TestCollections",output,"-e"};
 		Client.main(args);
+
 		assertTrue(recoOutput.exists());
 		assertTrue(recoOutput.isDirectory());
 		File[] files = recoOutput.listFiles();

@@ -31,6 +31,7 @@ public class CompletionExpressionVisitor extends AbstractTraversingNodeVisitor<V
 
 			RecommendationGenerator recommender = new RecommendationGenerator(methodCollections);
 			try {
+				System.out.println("Recommendation for type "+expr.getTypeReference().getAssembly().getName());
 				List<Recommendation> resultList = recommender.getRecommendations(expr.getTypeReference());
 				evalMap.put(resultList, completionEvent.getLastSelectedProposal());
 			} catch (FileNotFoundException e) {
