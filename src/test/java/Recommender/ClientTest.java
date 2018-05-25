@@ -1,4 +1,4 @@
-package Recommender;
+package recommender;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -35,14 +35,10 @@ public class ClientTest {
 			recommenderDir.mkdir();
 		}
 		
-		System.out.println(recommenderDir.getAbsolutePath());
-		
 		if(!recoOutput.exists()) {
 			recoOutput.mkdir();
 		}
-		
-		System.out.println(recoOutput.getAbsolutePath());
-		
+
 		String[] args = {"src/test/java/Recommender","src/test/java/Recommender/TestCollections",output,"-e"};
 		Client.main(args);
 

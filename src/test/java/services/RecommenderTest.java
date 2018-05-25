@@ -23,18 +23,10 @@ import cc.kave.commons.model.events.completionevents.ICompletionEvent;
 import cc.kave.commons.model.events.completionevents.IProposal;
 import recommender.evaluation.Evaluator;
 import recommender.model.Recommendation;
-import recommender.service.IRecommendationGenerator;
-import recommender.service.impl.Export;
 import recommender.service.impl.ReadingArchiveEvents;
-import recommender.service.impl.RecommendationGenerator;
 import recommender.visitor.CompletionExpressionVisitor;
-public class RecommenderTest {
-	
-	
-	@Before
-	public void setup() throws UnsupportedEncodingException, FileNotFoundException, IOException {
 
-	}
+public class RecommenderTest {
 	
 	@Test
 	public void testGetRecommendation() throws FileNotFoundException {
@@ -56,6 +48,9 @@ public class RecommenderTest {
 					while (it.hasNext()) {
 						
 						Map.Entry<List<Recommendation>, IProposal> pair = (Map.Entry<List<Recommendation>, IProposal>) it.next();
+						
+						assertTrue(pair.getValue()!=null);
+						
 						evaluator.evaluate(pair.getKey(), pair.getValue());
 					}
 				}
@@ -68,7 +63,6 @@ public class RecommenderTest {
 		List<String> zips = Lists.newLinkedList();
 		for (File f : FileUtils.listFiles(new File(path), new String[] { "zip" }, true)) {
 			zips.add(f.getAbsolutePath());
-			System.out.println(f.getAbsolutePath());
 		}
 		return zips;
 	}
