@@ -39,7 +39,7 @@ public class ClientTest {
 			recoOutput.mkdir();
 		}
 
-		String[] args = {"src/test/java/Recommender","src/test/java/Recommender/TestCollections",output,"-e"};
+		String[] args = {"src/test/java/Recommender","src/test/java/recommender/collections",output,"-e"};
 		Client.main(args);
 
 		assertTrue(recoOutput.exists());

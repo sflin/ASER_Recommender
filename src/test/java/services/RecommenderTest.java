@@ -33,7 +33,7 @@ public class RecommenderTest {
 
 		Evaluator evaluator = new Evaluator();
 		
-		for (String user : findAllUsers("src/test/java/Recommender")) {
+		for (String user : findAllUsers("src/test/java/recommender")) {
 			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));
 			while (ra.hasNext()) {
 				IIDEEvent event = ra.getNext(IIDEEvent.class);
@@ -42,7 +42,7 @@ public class RecommenderTest {
 
 					HashMap<List<Recommendation>, IProposal> evaluationSet = new HashMap<List<Recommendation>, IProposal>();
 
-					ce.getContext().getSST().accept(new CompletionExpressionVisitor("src/test/java/Recommender/TestCollections", evaluationSet, ce),null);
+					ce.getContext().getSST().accept(new CompletionExpressionVisitor("src/test/java/recommender/collections", evaluationSet, ce),null);
 
 					Iterator<Entry<List<Recommendation>, IProposal>> it = evaluationSet.entrySet().iterator();
 					while (it.hasNext()) {
