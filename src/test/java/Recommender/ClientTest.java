@@ -35,9 +35,13 @@ public class ClientTest {
 			recommenderDir.mkdir();
 		}
 		
+		System.out.println(recommenderDir.getAbsolutePath());
+		
 		if(!recoOutput.exists()) {
 			recoOutput.mkdir();
 		}
+		
+		System.out.println(recoOutput.getAbsolutePath());
 		
 		String[] args = {"src/test/java/Recommender","src/test/java/Recommender/TestCollections",output,"-e"};
 		Client.main(args);
