@@ -1,10 +1,10 @@
-package Service;
+package recommender.service;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import Model.Recommendation;
 import cc.kave.commons.model.events.completionevents.ICompletionEvent;
+import recommender.model.Recommendation;
 
 public interface IExport {
 

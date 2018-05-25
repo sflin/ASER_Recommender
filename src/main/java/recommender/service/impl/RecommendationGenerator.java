@@ -1,24 +1,24 @@
-package Service.Impl;
+package recommender.service.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.MethodCollection;
-import Model.ClassCollection;
-import Model.Method;
-import Model.Recommendation;
-import Service.IRecommender;
 import cc.kave.commons.model.naming.types.ITypeName;
+import recommender.model.ClassCollection;
+import recommender.model.Method;
+import recommender.model.MethodCollection;
+import recommender.model.Recommendation;
+import recommender.service.IRecommendationGenerator;
 
-public class Recommender implements IRecommender{
+public class RecommendationGenerator implements IRecommendationGenerator{
 	
 	private String contextCollectionPath;
 	private String dataType=".json";
 	private CollectionInteraction fileInteraction;
 	
-	public Recommender(String contextCollectionPath) {
+	public RecommendationGenerator(String contextCollectionPath) {
 		if(contextCollectionPath.endsWith("\\")) {
 			this.contextCollectionPath = contextCollectionPath;
 		}else {

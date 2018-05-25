@@ -1,9 +1,9 @@
-package Evaluation;
+package recommender.evaluation;
 
 import java.util.List;
 
-import Model.Recommendation;
 import cc.kave.commons.model.events.completionevents.IProposal;
+import recommender.model.Recommendation;
 
 public interface IEvaluator {
 	

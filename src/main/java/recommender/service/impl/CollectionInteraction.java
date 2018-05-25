@@ -1,4 +1,4 @@
-package Service.Impl;
+package recommender.service.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -7,8 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
-import Model.ClassCollection;
-import Service.ICollectionInteraction;
+import recommender.model.ClassCollection;
+import recommender.service.ICollectionInteraction;
 
 public class CollectionInteraction implements ICollectionInteraction{
 

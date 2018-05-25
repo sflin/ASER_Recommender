@@ -1,9 +1,9 @@
-package Service;
+package recommender.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
-import Model.ClassCollection;
+import recommender.model.ClassCollection;
 
 public interface ICollectionInteraction {
 

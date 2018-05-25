@@ -1,12 +1,12 @@
-package Service;
+package recommender.service;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import Model.Recommendation;
 import cc.kave.commons.model.naming.types.ITypeName;
+import recommender.model.Recommendation;
 
-public interface IRecommender {
+public interface IRecommendationGenerator {
 	
 	public List<Recommendation> getRecommendations(ITypeName type) throws FileNotFoundException;
 	

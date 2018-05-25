@@ -10,14 +10,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import AppStart.Client;
+import recommender.Client;
 
 public class ClientTest {
 
 	private String output;
 	private File recoOutput;
 	
-	/*
+	
 	@Before
 	public void setup() {
 		
@@ -30,7 +30,7 @@ public class ClientTest {
 		if(!recoOutput.exists()) {
 			recoOutput.mkdir();
 		}
-		String[] args = {"src//test//java/Recommender//","src//test//java//Recommender//TestCollections//",output,"-e"};
+		String[] args = {"src/test/java/Recommender/","src/test/java/Recommender/TestCollections",output,"-e"};
 		Client.main(args);
 		assertTrue(recoOutput.exists());
 		assertTrue(recoOutput.isDirectory());
@@ -46,5 +46,5 @@ public class ClientTest {
 		}
 		recoOutput.delete();
 	}
-	*/
+	
 }

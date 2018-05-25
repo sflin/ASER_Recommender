@@ -1,4 +1,4 @@
-package Evaluation;
+package recommender.evaluation;
 
 import java.util.Iterator;
 

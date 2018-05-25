@@ -1,4 +1,4 @@
-package Service.Impl;
+package recommender.service.impl;
 
 import java.io.File;
 import java.io.IOException;

@@ -1,21 +1,14 @@
-package Visitor;
+package recommender.visitor;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
-
-import Evaluation.Evaluator;
-import Model.Recommendation;
-import Service.Impl.Export;
-import Service.Impl.Recommender;
 import cc.kave.commons.model.events.completionevents.ICompletionEvent;
 import cc.kave.commons.model.events.completionevents.IProposal;
-import cc.kave.commons.model.naming.codeelements.IMethodName;
-import cc.kave.commons.model.ssts.expressions.assignable.ICastExpression;
 import cc.kave.commons.model.ssts.expressions.assignable.ICompletionExpression;
-import cc.kave.commons.model.ssts.expressions.assignable.IInvocationExpression;
 import cc.kave.commons.model.ssts.impl.visitor.AbstractTraversingNodeVisitor;
-import cc.kave.commons.model.ssts.references.IPropertyReference;
+import recommender.model.Recommendation;
+import recommender.service.impl.RecommendationGenerator;
 
 public class CompletionExpressionVisitor extends AbstractTraversingNodeVisitor<Void, Void> {
 
@@ -36,7 +29,7 @@ public class CompletionExpressionVisitor extends AbstractTraversingNodeVisitor<V
 
 		if (expr.getTypeReference() != null) {
 
-			Recommender recommender = new Recommender(methodCollections);
+			RecommendationGenerator recommender = new RecommendationGenerator(methodCollections);
 			try {
 				List<Recommendation> resultList = recommender.getRecommendations(expr.getTypeReference());
 				evalMap.put(resultList, completionEvent.getLastSelectedProposal());

@@ -2,32 +2,23 @@ package services;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.io.FileUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import com.google.common.collect.Lists;
-import Model.ClassCollection;
-import Model.Recommendation;
-import Service.IRecommender;
-import Service.Impl.ReadingArchiveEvents;
-import Service.Impl.Recommender;
 import cc.kave.commons.model.events.IIDEEvent;
 import cc.kave.commons.model.events.completionevents.CompletionEvent;
 import cc.kave.commons.model.events.completionevents.ICompletionEvent;
+import recommender.model.Recommendation;
+import recommender.service.IRecommendationGenerator;
+import recommender.service.impl.ReadingArchiveEvents;
+import recommender.service.impl.RecommendationGenerator;
 public class RecommenderTest {
 	
 	
@@ -38,9 +29,9 @@ public class RecommenderTest {
 	
 	@Test
 	public void testGetRecommendation() throws FileNotFoundException {
-		IRecommender recommender = new Recommender("src//test//java//Recommender//TestCollections//");
+		IRecommendationGenerator recommender = new RecommendationGenerator("src/test/java/Recommender/TestCollections");
 		
-		for (String user : findAllUsers("src//test//java/Recommender//")) {
+		for (String user : findAllUsers("src/test/java/Recommender/")) {
 			ReadingArchiveEvents ra = new ReadingArchiveEvents(new File(user));
 			while (ra.hasNext()) {
 				IIDEEvent event = ra.getNext(IIDEEvent.class);

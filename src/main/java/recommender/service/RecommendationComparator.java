@@ -1,8 +1,8 @@
-package Service.Impl;
+package recommender.service;
 
 import java.util.Comparator;
 
-import Model.Recommendation;
+import recommender.model.Recommendation;
 
 public class RecommendationComparator implements Comparator<Recommendation> {
 	    @Override

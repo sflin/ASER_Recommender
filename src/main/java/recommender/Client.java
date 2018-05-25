@@ -1,8 +1,7 @@
-package AppStart;
+package recommender;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,17 +12,16 @@ import org.apache.commons.io.FileUtils;
 
 import com.google.common.collect.Lists;
 
-import Evaluation.Evaluator;
-import Model.Recommendation;
-import Service.IExport;
-import Service.Impl.Export;
-import Service.Impl.ReadingArchiveEvents;
-import Service.Impl.Recommender;
-import Visitor.CompletionExpressionVisitor;
 import cc.kave.commons.model.events.IIDEEvent;
 import cc.kave.commons.model.events.completionevents.CompletionEvent;
 import cc.kave.commons.model.events.completionevents.ICompletionEvent;
 import cc.kave.commons.model.events.completionevents.IProposal;
+import recommender.evaluation.Evaluator;
+import recommender.model.Recommendation;
+import recommender.service.IExport;
+import recommender.service.impl.Export;
+import recommender.service.impl.ReadingArchiveEvents;
+import recommender.visitor.CompletionExpressionVisitor;
 
 public class Client {
 

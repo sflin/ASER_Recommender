@@ -1,10 +1,10 @@
-package Evaluation;
+package recommender.evaluation;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import Model.Recommendation;
 import cc.kave.commons.model.events.completionevents.IProposal;
+import recommender.model.Recommendation;
 
 public class Evaluator implements IEvaluator {
 
@@ -111,6 +111,7 @@ public class Evaluator implements IEvaluator {
 	 * @param rankOfK
 	 * @return double meanAveragePrecision
 	 */
+	@SuppressWarnings("unused")
 	private double getMeanAveragePrecision() {
 		double apSum = 0.0;
 		int count = 0;

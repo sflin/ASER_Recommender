@@ -1,4 +1,4 @@
-package Model;
+package recommender.model;
 
 import java.util.List;
 

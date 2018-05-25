@@ -1,4 +1,4 @@
-package Service.Impl;
+package recommender.service.impl;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,9 +11,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-import Model.Recommendation;
-import Service.IExport;
 import cc.kave.commons.model.events.completionevents.ICompletionEvent;
+import recommender.model.Recommendation;
+import recommender.service.IExport;
 
 public class Export implements IExport{
 
