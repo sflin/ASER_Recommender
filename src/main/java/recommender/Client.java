@@ -25,10 +25,7 @@ import recommender.visitor.CompletionExpressionVisitor;
 
 public class Client {
 
-	public static void main(String[] args) throws FileNotFoundException {
-		run(args[0], args[1], args[2], args[3]);
-	}
-
+	
 	private static String DIR_USERDATA;
 	private static String DIR_METHODCOLLECTIONS;
 
@@ -36,6 +33,10 @@ public class Client {
 	private static Evaluator evaluator;
 	private static IExport export;
 
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		run(args[0], args[1], args[2], args[3]);
+	}
 	public static void run(String userdata, String methodCollections, String outputDirectory, String flag)
 			throws FileNotFoundException {
 
