@@ -45,11 +45,14 @@ public class RecommendationGenerator implements IRecommendationGenerator{
 		String filename = type.getName().toString();
 		
 		String filepath = parentDir +File.separator+filename;
+		System.out.println(filepath);
 		
 		File file = new File(contextCollectionPath+filepath+dataType);
 		if(file.exists()){
+			System.out.println("file does exist");
 			classCollection = fileInteraction.parseClassfile(file);
 		}else {
+			System.out.println("file does not exist");
 			return recommendations; //did not find any files
 		}
 		
