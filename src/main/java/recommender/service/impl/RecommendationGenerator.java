@@ -19,10 +19,10 @@ public class RecommendationGenerator implements IRecommendationGenerator{
 	private CollectionInteraction fileInteraction;
 	
 	public RecommendationGenerator(String contextCollectionPath) {
-		if(contextCollectionPath.endsWith("\\")) {
+		if(contextCollectionPath.endsWith(File.separator)) {
 			this.contextCollectionPath = contextCollectionPath;
 		}else {
-			this.contextCollectionPath = contextCollectionPath+"\\";
+			this.contextCollectionPath = contextCollectionPath+File.separator;
 		}
 		fileInteraction = new CollectionInteraction();
 	}
