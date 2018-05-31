@@ -20,6 +20,8 @@ public class Export implements IExport{
 	private static String DIR_OUTPUT;
 	private String timeOfRun;
 	private File directory;
+	
+	
 	public Export(String outputDirectory) {
 		
 		DIR_OUTPUT =outputDirectory;
@@ -34,6 +36,13 @@ public class Export implements IExport{
 		timeOfRun = dateFormat.format(date);
 	}
 	
+	
+	/**
+	 * Method to print all recommendations to the output directory of the Recommender
+	 * 
+	 * @param List<Recommendation> recommendations
+	 * @return void
+	 */
 	public void printRecommendationsToCsv(List<Recommendation> recommendations) throws FileNotFoundException {
 
 		try(FileWriter fw = new FileWriter(directory+File.separator+"Recommendations_RunOf_"+timeOfRun+".txt", true);
@@ -51,6 +60,12 @@ public class Export implements IExport{
 
 	}
 	
+	/**
+	 * Method to print a Completion Event to the OutputFile.
+	 * 
+	 * @param ICompletionEvent event
+	 * @return void
+	 */
 	public void printEvent(ICompletionEvent event) throws FileNotFoundException {
 
 		try(FileWriter fw = new FileWriter(directory+File.separator+"Event_RunOf_"+timeOfRun+".txt", true);

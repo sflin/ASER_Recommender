@@ -13,6 +13,12 @@ import recommender.service.ICollectionInteraction;
 public class CollectionInteraction implements ICollectionInteraction{
 
 	
+	/**
+	 * Reads a MethodCollection file and returns it as a ClassCollection 
+	 * 
+	 * @param file
+	 * @return ClassCollection
+	 */
 	public ClassCollection parseClassfile(File file) throws FileNotFoundException {
 		
 		Gson gson = new GsonBuilder().create();

@@ -44,7 +44,6 @@ public class ClientTest {
 
 		assertTrue(recoOutput.exists());
 		assertTrue(recoOutput.isDirectory());
-		File[] files = recoOutput.listFiles();
 	}
 	
 	@After

@@ -27,6 +27,15 @@ public class RecommendationGenerator implements IRecommendationGenerator{
 		fileInteraction = new CollectionInteraction();
 	}
 	
+	
+	/**
+	 * Based on the ITypeName that is been given to this method, the corresponding recommendations
+	 * are calculated. This is done by searching the MethodCollections for the suitable type, gathering the 
+	 * aggregated methods and returning them as a sorted list, based on their frequency.
+	 * 
+	 * @param ITypeName type
+	 * @return List<Recommendation>
+	 */
 	public List<Recommendation> getRecommendations(ITypeName type) throws FileNotFoundException{
 		
 		List<Recommendation> recommendations = new ArrayList<Recommendation>();
