@@ -44,7 +44,7 @@ public class RecommendationGenerator implements IRecommendationGenerator{
 		String parentDir = type.getAssembly().getName().toString();
 		String filename = type.getName().toString();
 		
-		String filepath = parentDir +"\\"+filename;
+		String filepath = parentDir +File.separator+filename;
 		
 		File file = new File(contextCollectionPath+filepath+dataType);
 		if(file.exists()){
