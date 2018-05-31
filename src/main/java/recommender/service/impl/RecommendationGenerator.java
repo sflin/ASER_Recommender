@@ -49,10 +49,10 @@ public class RecommendationGenerator implements IRecommendationGenerator{
 		
 		File file = new File(contextCollectionPath+filepath+dataType);
 		if(file.exists()){
-			System.out.println("file does exist");
+			System.out.println("file does exist" + file.getAbsolutePath());
 			classCollection = fileInteraction.parseClassfile(file);
 		}else {
-			System.out.println("file does not exist");
+			System.out.println("file does not exist"+ file.getAbsolutePath());
 			return recommendations; //did not find any files
 		}
 		
