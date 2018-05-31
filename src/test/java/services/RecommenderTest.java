@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,7 +40,7 @@ public class RecommenderTest {
 			while (ra.hasNext()) {
 				IIDEEvent event = ra.getNext(IIDEEvent.class);
 				if (event instanceof CompletionEvent) {
-					ICompletionEvent ce = (CompletionEvent) event;
+					ICompletionEvent ce = (CompletionEvent) event; 
 
 					HashMap<List<Recommendation>, IProposal> evaluationSet = new HashMap<List<Recommendation>, IProposal>();
 
@@ -49,7 +51,9 @@ public class RecommenderTest {
 						
 						Map.Entry<List<Recommendation>, IProposal> pair = (Map.Entry<List<Recommendation>, IProposal>) it.next();
 						
-						assertTrue(pair.getValue()!=null);
+						assertTrue(round(pair.getKey().get(0).getPercentage(),2)==Float.parseFloat("13.66"));
+						assertTrue(pair.getKey().get(0).getName().equals("System.String.IsNullOrEmpty(System.String value)"));
+						assertTrue(pair.getKey().size()==131);
 						
 						evaluator.evaluate(pair.getKey(), pair.getValue());
 					}
@@ -58,6 +62,14 @@ public class RecommenderTest {
 			ra.close();
 		}		
 	}
+	
+	private float round(double d, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(d);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.floatValue();
+ }
 
 	public static List<String> findAllUsers(String path) {
 		List<String> zips = Lists.newLinkedList();
