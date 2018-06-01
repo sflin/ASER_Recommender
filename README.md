@@ -60,11 +60,17 @@ and this dependency:
 ```
 
 # Execution
-For execution, ASER needs a set of so-called class-collections which can be obtained by running the ASER-parser over one of the publicly availalbe context-data-sets provided by the [KaVe-project](http://www.kave.cc/datasets). Additionally, ASER requires a set of annotated User-event data. In our implementation, we built the class-collections with the data-set [Contexts (May 3, 2017)](http://www.st.informatik.tu-darmstadt.de/artifacts/kave/Contexts-170503.zip), the recommender was tested with the interaction data [Events (Jan 18, 2018)](http://www.st.informatik.tu-darmstadt.de/artifacts/kave/Events-170301-2.zip). For demonstration purpose, a subset of the used sets is included.
-In order to run the parser, the context-files to parse must be placed in a zipped folder. The application can then be started by passing the absolute path of the zipped folder as a command line argument and as a second argument the absolute path of where to store the parsed files. These arguments can also be ommitted, but then the context-files must be placed in /home/user/Contexts or C:\Users\<Name>\Contexts respectively. The class-collections are written to a folder called "archive" on the user's home directory.
+For execution, ASER needs a set of so-called class-collections which can be obtained by running the ASER-parser over one of the publicly availalbe context-data-sets provided by the [KaVe-project](http://www.kave.cc/datasets). Additionally, ASER requires a set of annotated User-event data. In our implementation, we built the class-collections with the data-set [Contexts (May 3, 2017)](http://www.st.informatik.tu-darmstadt.de/artifacts/kave/Contexts-170503.zip), the recommender was tested with the interaction data [Events (Jan 18, 2018)](http://www.st.informatik.tu-darmstadt.de/artifacts/kave/Events-170301-2.zip). 
+In order to run the parser, the context-files to parse must be placed in a zipped folder. The application can then be started by executing the script "Parser.java" with the absolute path of the zipped folder as a command line argument and as a second argument the absolute path of where to store the parsed files. These arguments can also be ommitted, but then the context-files must be placed in /home/<user>/Contexts or C:\Users\<Name>\Contexts respectively. The class-collections are written to a folder called "archive" on the user's home directory.
+As the parsing process takes some time, a finished version can be downloaded from the following link [here](http://aser.dominikbuenzli.ch/MethodCollectionsProd.zip). Please note that you have to unzip the ClassCollections before using them.
 
-The recommender requires 4 input parameters. First, the recommender expects the path to the events archives. Second, the path to the class collections must be specified. Third, the output path must be specified. Last but not least, the flag "-e" can be used to indicate whether an evaluation of the results should take place. If no evaluation is desired, an "empty" string can be passed. An example call for Windows could look like this:  "C:\Users<Name>\Events" C:\Users<Name>\ClassCollections" C:\Users<Name>\Output" "-e" or for Linux: "/home/user/Events" "/home/user/ClassCollections" "/home/user/Output" "-e"
-As the parsing process takes some time, a finished version can be downloaded from the following link [here](http://aser.dominikbuenzli.ch/MethodCollectionsProd.zip). Please note that you have to unzip the ClassCollections before using them. 
+The recommender requires four input parameters. First, the recommender expects the path to the events archives. Second, the path to the class collections must be specified. Third, the output path must be specified. Last but not least, the flag "-e" can be used to indicate whether an evaluation of the results should take place. If no evaluation is desired, an "empty" string can be passed. On Windows, call the executable of the class "Client.java" in the Recommender-Project for example with these arguments:  
+
+    C:\Users\<Name>\Events C:\Users\<Name>\ClassCollections C:\Users\<Name>\Output -e 
+  
+On Linux, use: 
+
+    /home/<user>/Events /home/<user>/ClassCollections /home/<user>/Output -e
 
 # Evaluation:
 
